@@ -1,29 +1,12 @@
 package com.howtographql.hackernews;
 
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * @author Alexander Pyreev
  */
-@Component
-public class LinkRepository {
-    private final List<Link> links;
+public interface LinkRepository extends MongoRepository<Link, String> {
+    Link findByUrl(String url);
 
-    public LinkRepository() {
-        links = new ArrayList<>();
-        //add some links to start off with
-        links.add(new Link("http://howtographql.com", "Your favorite GraphQL page"));
-        links.add(new Link("http://graphql.org/learn/", "The official docks"));
-    }
-
-    public List<Link> getAllLinks() {
-        return links;
-    }
-
-    public void saveLink(Link link) {
-        links.add(link);
-    }
+    Link findByDescription(String description);
 }

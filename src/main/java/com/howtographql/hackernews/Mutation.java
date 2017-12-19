@@ -18,7 +18,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public Link createLink(final String url, final String description) {
         Link newLink = new Link(url, description);
-        linkRepository.saveLink(newLink);
+        linkRepository.save(newLink);
         return newLink;
     }
 }

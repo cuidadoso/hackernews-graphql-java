@@ -20,6 +20,6 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public List<Link> allLinks() {
-        return linkRepository.getAllLinks();
+        return linkRepository.findAll();
     }
 }
