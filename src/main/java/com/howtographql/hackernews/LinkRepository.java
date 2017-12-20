@@ -8,9 +8,9 @@ import java.util.List;
  * @author Alexander Pyreev
  */
 public interface LinkRepository extends MongoRepository<Link, String> {
-    Link findById(String id);
+    Link findById(final String id);
 
-    Link findByUrl(String url);
+    Link findByUrl(final String url);
 
-    List<Link> findByDescription(String description);
+    List<Link> findByDescription(final String description);
 }

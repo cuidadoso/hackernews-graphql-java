@@ -8,6 +8,7 @@ type Query {
 }
 
 type Mutation {
+    createUser(name: String!, authProvider: AuthData!): User
     createLink(url: String!, description: String!): Link
 }
 
@@ -15,4 +16,16 @@ type Link {
     id: ID!
     url: String!
     description: String!
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String
+    password: String
+}
+
+input AuthData {
+    email: String!
+    password: String!
 }
