@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author Alexander Pyreev
  */
-// @Component
+@Component
 public class MongoExample implements CommandLineRunner {
     private final LinkRepository repository;
 
@@ -17,7 +17,7 @@ public class MongoExample implements CommandLineRunner {
     }
 
     @Override
-    public void run(final String... args) throws Exception {
+    public void run(final String... args) {
         repository.deleteAll();
 
         // save a couple of customers
