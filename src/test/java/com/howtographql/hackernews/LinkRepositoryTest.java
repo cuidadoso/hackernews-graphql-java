@@ -37,11 +37,24 @@ public class LinkRepositoryTest {
 
     @Test
     public void testFetchData() {
-        Link linkA = repository.findByDescription("First");
+        Link linkA = repository.findByDescription("First")
+                               .get(0);
         assertNotNull(linkA);
         assertEquals("http://howtographql.com", linkA.getUrl());
         List<Link> links = repository.findAll();
         assertEquals(2, links.size());
+    }
+
+    @Test
+    public void testDataUpdate() {
+        Link linkB = repository.findByDescription("First")
+                               .get(0);
+        linkB.setUrl("http://howtographql.ru");
+        repository.save(linkB);
+        Link linkC = repository.findByDescription("First")
+                               .get(0);
+        assertNotNull(linkC);
+        assertEquals("http://howtographql.ru", linkC.getUrl());
     }
 
     @After

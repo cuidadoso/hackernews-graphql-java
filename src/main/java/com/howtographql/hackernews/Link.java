@@ -1,5 +1,8 @@
 package com.howtographql.hackernews;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,11 +11,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author Alexander Pyreev
  */
 @Document(collection="links")
+@NoArgsConstructor
 public class Link {
     @Id
-    private final String id;
-    private final String url;
-    private final String description;
+    @Getter
+    @Setter
+    private String id;
+    @Getter
+    @Setter
+    private String url;
+    @Getter
+    @Setter
+    private String description;
 
     public Link(final String id, final String url, final String description) {
         this.id = id;
@@ -22,18 +32,6 @@ public class Link {
 
     public Link(String url, String description) {
         this(null, url, description);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     @Override
