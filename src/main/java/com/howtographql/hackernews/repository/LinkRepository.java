@@ -1,5 +1,6 @@
-package com.howtographql.hackernews;
+package com.howtographql.hackernews.repository;
 
+import com.howtographql.hackernews.models.Link;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

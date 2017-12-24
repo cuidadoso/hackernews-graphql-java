@@ -5,17 +5,20 @@ schema {
 
 type Query {
     allLinks: [Link]
+    allUsers: [User]
 }
 
 type Mutation {
     createUser(name: String!, authProvider: AuthData!): User
     createLink(url: String!, description: String!): Link
+    signinUser(auth: AuthData): SigninPayload
 }
 
 type Link {
     id: ID!
     url: String!
     description: String!
+    postedBy: User
 }
 
 type User {
@@ -29,3 +32,9 @@ input AuthData {
     email: String!
     password: String!
 }
+
+type SigninPayload {
+    token: String
+    user: User
+}
+

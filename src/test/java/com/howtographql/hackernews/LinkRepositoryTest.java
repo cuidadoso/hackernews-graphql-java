@@ -1,5 +1,7 @@
 package com.howtographql.hackernews;
 
+import com.howtographql.hackernews.models.Link;
+import com.howtographql.hackernews.repository.LinkRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

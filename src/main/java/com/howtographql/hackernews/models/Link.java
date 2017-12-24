@@ -1,4 +1,4 @@
-package com.howtographql.hackernews;
+package com.howtographql.hackernews.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,15 +23,23 @@ public class Link {
     @Getter
     @Setter
     private String description;
+    @Getter
+    @Setter
+    private String userId;
 
-    public Link(final String id, final String url, final String description) {
+    public Link(String id, String url, String description, String userId) {
         this.id = id;
         this.url = url;
         this.description = description;
+        this.userId = userId;
+    }
+
+    public Link(String url, String description, String userId) {
+        this(null, url, description, userId);
     }
 
     public Link(String url, String description) {
-        this(null, url, description);
+        this(url, description, null);
     }
 
     @Override
@@ -39,6 +47,7 @@ public class Link {
         return new ToStringBuilder(this).append("id", id)
                                         .append("url", url)
                                         .append("description", description)
+                                        .append("userId", userId)
                                         .toString();
     }
 }
