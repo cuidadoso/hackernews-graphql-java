@@ -6,12 +6,17 @@ schema {
 type Query {
     allLinks: [Link]
     allUsers: [User]
+    allVotes: [Vote]
+    allVotesByUser(userId: String!): [Vote]
+    allVotesByLink(linkId: String!): [Vote]
+    voteByUserAndByLink(userId: String!, linkId: String!): Vote
 }
 
 type Mutation {
     createUser(name: String!, authProvider: AuthData!): User
     createLink(url: String!, description: String!): Link
     signinUser(auth: AuthData): SigninPayload
+    createVote(linkId: ID, userId: ID): Vote
 }
 
 type Link {
@@ -37,4 +42,14 @@ type SigninPayload {
     token: String
     user: User
 }
+
+type Vote {
+    id: ID!
+    createdAt: DateTime!
+    user: User!
+    link: Link!
+}
+
+scalar DateTime
+
 

@@ -1,16 +1,18 @@
 package com.howtographql.hackernews.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import com.howtographql.hackernews.models.AuthData;
-import com.howtographql.hackernews.models.Link;
-import com.howtographql.hackernews.models.SigninPayload;
-import com.howtographql.hackernews.models.User;
+import com.howtographql.hackernews.models.*;
 import com.howtographql.hackernews.repository.LinkRepository;
 import com.howtographql.hackernews.repository.UserRepository;
+import com.howtographql.hackernews.repository.VoteRepository;
 import graphql.GraphQLException;
 import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 
 /**
  * @author Alexander Pyreev
@@ -19,12 +21,15 @@ import org.springframework.stereotype.Component;
 public class Mutation implements GraphQLMutationResolver {
     private final LinkRepository linkRepository;
     private final UserRepository userRepository;
+    private final VoteRepository voteRepository;
 
     @Autowired
     public Mutation(final LinkRepository linkRepository,
-                    final UserRepository userRepository) {
+                    final UserRepository userRepository,
+                    final VoteRepository voteRepository) {
         this.linkRepository = linkRepository;
         this.userRepository = userRepository;
+        this.voteRepository = voteRepository;
     }
 
     public Link createLink(final String url, final String description, DataFetchingEnvironment env) {
@@ -44,5 +49,10 @@ public class Mutation implements GraphQLMutationResolver {
             return new SigninPayload(user.getId(), user);
         }
         throw new GraphQLException("Invalid credentials");
+    }
+
+    public Vote createVote(String linkId, String userId) {
+        ZonedDateTime now = Instant.now().atZone(ZoneOffset.UTC);
+        return voteRepository.save(new Vote(now, userId, linkId));
     }
 }
