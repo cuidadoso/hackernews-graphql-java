@@ -50,7 +50,8 @@ public class MongoExample implements CommandLineRunner {
         // fetch an individual customer
         System.out.println("Customer found with findByUrl('http://howtographql.com'):");
         System.out.println("--------------------------------");
-        System.out.println(linkRepository.findByUrl("http://howtographql.com"));
+        System.out.println(linkRepository.findByUrl("http://howtographql.com")
+                                         .get(0));
 
         System.out.println("Customers found with findByDescription('Second'):");
         System.out.println("--------------------------------");

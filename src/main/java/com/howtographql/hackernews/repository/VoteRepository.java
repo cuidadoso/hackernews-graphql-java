@@ -13,5 +13,5 @@ public interface VoteRepository extends MongoRepository<Vote, String> {
 
     List<Vote> findByLinkId(final String linkId);
 
-    Vote findByUserIdAndLinkId(final String userId, final String linkId);
+    List<Vote> findByUserIdAndLinkId(final String userId, final String linkId);
 }

@@ -3,6 +3,7 @@ package com.howtographql.hackernews.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.howtographql.hackernews.models.Link;
+import com.howtographql.hackernews.models.LinkFilter;
 import com.howtographql.hackernews.models.User;
 import com.howtographql.hackernews.models.Vote;
 import com.howtographql.hackernews.repository.LinkRepository;
@@ -31,7 +32,18 @@ public class Query implements GraphQLQueryResolver {
         this.voteRepository = voteRepository;
     }
 
-    public List<Link> allLinks() {
+    public List<Link> allLinks(LinkFilter filter) {
+        String description = filter == null ? null : filter.getDescriptionContains();
+        String url = filter == null ? null : filter.getUrlContains();
+        boolean isDescriptionExists = description != null && !description.isEmpty();
+        boolean isUrlExists = url != null && !url.isEmpty();
+        if (isDescriptionExists && !isUrlExists) {
+            return linkRepository.findByDescriptionContains(description);
+        } else if(!isDescriptionExists && isUrlExists) {
+            return linkRepository.findByUrlContains(url);
+        } else if(isDescriptionExists) {
+            return linkRepository.findByUrlContainsAndDescriptionContains(url, description);
+        }
         return linkRepository.findAll();
     }
 
@@ -39,20 +51,18 @@ public class Query implements GraphQLQueryResolver {
         return userRepository.findAll();
     }
 
-    public List<Vote> allVotes() {
+    public List<Vote> allVotes(final String userId, final String linkId) {
+        boolean isUserIdExists = userId != null && !userId.isEmpty();
+        boolean isLinkIdExists = linkId != null && !linkId.isEmpty();
+        if (isUserIdExists && !isLinkIdExists) {
+            return voteRepository.findByUserId(userId);
+        } else if(!isUserIdExists && isLinkIdExists) {
+            return voteRepository.findByLinkId(linkId);
+        } else if(isUserIdExists) {
+            return voteRepository.findByUserIdAndLinkId(userId, linkId);
+        }
+
         return voteRepository.findAll();
-    }
-
-    public List<Vote> allVotesByUser(final String userId) {
-        return voteRepository.findByUserId(userId);
-    }
-
-    public List<Vote> allVotesByLink(final String linkId) {
-        return voteRepository.findByLinkId(linkId);
-    }
-
-    public Vote voteByUserAndByLink(final String userId, final String linkId) {
-        return voteRepository.findByUserIdAndLinkId(userId, linkId);
     }
 
 }

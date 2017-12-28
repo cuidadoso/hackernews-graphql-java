@@ -11,7 +11,16 @@ import java.util.List;
 public interface LinkRepository extends MongoRepository<Link, String> {
     Link findById(final String id);
 
-    Link findByUrl(final String url);
+    List<Link> findByUrl(final String url);
+
+    List<Link> findByUrlContains(final String url);
 
     List<Link> findByDescription(final String description);
+
+    List<Link> findByDescriptionContains(final String description);
+
+    List<Link> findByUrlAndDescription(final String url, final String description);
+
+    List<Link> findByUrlContainsAndDescriptionContains(final String url, final String description);
+
 }

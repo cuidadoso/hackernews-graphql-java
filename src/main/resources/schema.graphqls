@@ -4,12 +4,9 @@ schema {
 }
 
 type Query {
-    allLinks: [Link]
+    allLinks(filter: LinkFilter): [Link]
     allUsers: [User]
-    allVotes: [Vote]
-    allVotesByUser(userId: String!): [Vote]
-    allVotesByLink(linkId: String!): [Vote]
-    voteByUserAndByLink(userId: String!, linkId: String!): Vote
+    allVotes(userId: String, linkId: String): [Vote]
 }
 
 type Mutation {
@@ -52,4 +49,7 @@ type Vote {
 
 scalar DateTime
 
-
+input LinkFilter {
+    description_contains: String
+    url_contains: String
+}
