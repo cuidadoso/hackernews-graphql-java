@@ -10,9 +10,7 @@ import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 /**
  * @author Alexander Pyreev
@@ -52,7 +50,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public Vote createVote(String linkId, String userId) {
-        ZonedDateTime now = Instant.now().atZone(ZoneOffset.UTC);
+        LocalDateTime now = LocalDateTime.now();
         return voteRepository.save(new Vote(now, userId, linkId));
     }
 }

@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 /**
  * @author Alexander Pyreev
@@ -21,7 +21,7 @@ public class Vote {
     private String id;
     @Getter
     @Setter
-    private ZonedDateTime createdAt;
+    private LocalDateTime createdAt;
     @Getter
     @Setter
     private String userId;
@@ -29,11 +29,11 @@ public class Vote {
     @Setter
     private String linkId;
 
-    public Vote(ZonedDateTime createdAt, String userId, String linkId) {
+    public Vote(LocalDateTime createdAt, String userId, String linkId) {
         this(null, createdAt, userId, linkId);
     }
 
-    public Vote(String id, ZonedDateTime createdAt, String userId, String linkId) {
+    public Vote(String id, LocalDateTime createdAt, String userId, String linkId) {
         this.id = id;
         this.createdAt = createdAt;
         this.userId = userId;

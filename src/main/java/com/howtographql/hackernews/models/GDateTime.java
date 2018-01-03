@@ -5,11 +5,10 @@ import graphql.schema.Coercing;
 import graphql.schema.GraphQLScalarType;
 import org.springframework.stereotype.Component;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * TODO Vote query is not working with parsing createdAt field
  * @author Alexander Pyreev
  */
 @Component
@@ -18,8 +17,8 @@ public class GDateTime extends GraphQLScalarType {
         super("DateTime", "DataTime scalar", new Coercing() {
             @Override
             public String serialize(Object input) {
-                //serialize the ZonedDateTime into string on the way out
-                return ((ZonedDateTime) input).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+                //serialize the LocalDateTime into string on the way out
+                return ((LocalDateTime) input).format(DateTimeFormatter.ISO_DATE_TIME);
             }
 
             @Override
@@ -28,10 +27,10 @@ public class GDateTime extends GraphQLScalarType {
             }
 
             @Override
-            public ZonedDateTime parseLiteral(Object input) {
+            public LocalDateTime parseLiteral(Object input) {
                 //parse the string values coming in
                 if(input instanceof StringValue) {
-                    return ZonedDateTime.parse(((StringValue) input).getValue());
+                    return LocalDateTime.parse(((StringValue) input).getValue());
                 } else {
                     return null;
                 }
